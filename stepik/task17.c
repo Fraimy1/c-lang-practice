@@ -4,9 +4,9 @@
 
 int main(void)
 {
-    int n;
-    scanf("%d", &n);
+    double day;
+    scanf("%lf", &day);
     
-    int new_n = n % 60;
-    printf("%d", new_n);
+    double week = (day + 1) / 7;
+    printf("%.0lf", week);
 }
