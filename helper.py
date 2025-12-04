@@ -18,3 +18,15 @@ with open(write_path, 'w') as f:
 
 print("Operation complete!\nRun command below to satart code\n")
 print(f"gcc stepik/task{n}.c -o task; ./task.exe")
+
+warning_message = (
+"-"*100 + 
+f"""
+    - MAKE SURE TO SWITCH FILES!!!
+
+    - MAKE SURE TO USE {n} in your command!!!
+""" + 
+"-"*100
+)
+
+print(warning_message)
