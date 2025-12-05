@@ -1,27 +1,27 @@
 #include <stdio.h>
-#include <math.h>
-
-
-const int HALF_TIME = 5570;
-const double ATOMS_IN_GRAM = 7.5e10;
-
-double get_atom_amount(double k)
-{
-    double lambda = log(2) / (double)HALF_TIME;
-    double n = ATOMS_IN_GRAM * exp(-lambda * k);
-
-    return n;
-}
+#include <locale.h>
 
 int main(void)
 {
-    int k;
+    setlocale(LC_ALL, "");
 
-    scanf("%d", &k);
+    char s;  
+    scanf("%c",&s);
 
-    double n_billions = get_atom_amount(k) / pow(10, 9);
-
-    printf("%.2lf", n_billions);
+    switch (s) {
+        case 'f' : 
+        printf("и себя, и коня потеряешь!\n");
+        break;
+        case 'l' : 
+        printf("коня потеряешь, себя спасёшь!\n"); 
+        break; 
+        case 'r' : 
+        printf("себя потеряешь, коня спасёшь!\n"); 
+        break;
+        
+        default :
+        break; 
+    }
 
     return 0;
 }
