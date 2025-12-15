@@ -1,19 +1,17 @@
 #include <stdio.h>
 
-int main(void) 
+int sum(int a, int b)
 {
-    char str[30];
-    fgets(str, 30, stdin);
-    fflush(stdin); // очищаем поток ввода
-    // puts(str);
-
-    int i = 0;
-    while(str[i])
-    {
-        ++i;
-    }
-
-    printf("%d", i-1);
-
-    return 0;
+    return a + b;
 }
+
+// int main(void) 
+// {
+//     int a, b;
+    
+//     scanf("%d %d", &a, &b);
+
+//     printf("%d", sum(a, b));
+
+//     return 0;
+// }
