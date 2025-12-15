@@ -3,30 +3,28 @@
 
 int main(void)
 {
-    char str1[60];
-    char str2[60];
+    char s[105];
+    if (fgets(s, 105, stdin) == NULL)
+        return 0;
 
-    scanf("%s", str1);
-    scanf("%s", str2);
+    int count = 0;
+    int i = 0;
 
-    int len1 = strlen(str1);
-    int len2 = strlen(str2);
+    while (s[i] != '\0')
+    {
+        while (s[i] == ' ')
+            i++;
 
-    char a_last = str1[len1 - 1];
-    char b_first = str2[0];
+        if (s[i] == '\0' || s[i] == '\n')
+            break;
 
-    char b_last = str2[len2 - 1];
-    char a_first = str1[0];
+        count++;
 
-    if (a_last >= 'a' && a_last <= 'z') a_last -= 32;
-    if (b_first >= 'a' && b_first <= 'z') b_first -= 32;
-    if (b_last >= 'a' && b_last <= 'z') b_last -= 32;
-    if (a_first >= 'a' && a_first <= 'z') a_first -= 32;
+        while (s[i] != ' ' && s[i] != '\0' && s[i] != '\n')
+            i++;
+    }
 
-    if (a_last == b_first || b_last == a_first)
-        printf("yes");
-    else
-        printf("no");
+    printf("%d", count);
 
     return 0;
 }

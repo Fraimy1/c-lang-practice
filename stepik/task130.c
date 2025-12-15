@@ -1,36 +1,28 @@
 #include <stdio.h>
 
+int factorial(int p)
+{
+    int res = 1;
+    int i;
+    for (i = 1; i <= p; i++)
+    {
+        res *= i;
+    }
+    return res;
+}
+
+int combin(int n, int k)
+{
+    int fn = factorial(n);
+    int fk = factorial(k);
+    int fnk = factorial(n - k);
+    return fn / (fk * fnk);
+}
+
 int main(void)
 {
-    char s[105];
-    char out[105];
-    int i = 0, j = 0;
-
-    fgets(s, 105, stdin);
-
-    while (s[i] == ' ')
-        i++;
-
-    while (s[i] != '\0' && s[i] != '\n')
-    {
-        if (s[i] != ' ')
-        {
-            out[j++] = s[i];
-        }
-        else
-        {
-            if (j > 0 && out[j-1] != ' ')
-                out[j++] = ' ';
-        }
-        i++;
-    }
-
-    if (j > 0 && out[j-1] == ' ')
-        j--;
-
-    out[j] = '\0';
-
-    printf("%s", out);
-
+    int n = 0, k = 0;
+    scanf("%d%d", &n, &k);
+    printf("%d", combin(n, k));
     return 0;
 }

@@ -1,103 +1,62 @@
-// :contentReference[oaicite:0]{index=0}
 #include <stdio.h>
+
+#define MAXN 8
+#define P 2
 
 int main(void) {
     int n;
-    int p = 4;  /* group number, can be changed */
+    int a[MAXN][MAXN];
 
-    while (scanf("%d", &n) == 1) {
-        int a[8][8];
-        int arr[64];
-        int shifted[64];
-        int len = n * n;
+    if (scanf("%d", &n) != 1) return 0;
+    if (n < 1 || n > MAXN) return 0;
 
-        /* read matrix */
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < n; j++)
-                scanf("%d", &a[i][j]);
+    for (int i = 0; i < n; ++i)
+        for (int j = 0; j < n; ++j)
+            if (scanf("%d", &a[i][j]) != 1) return 0;
 
-        /* extract elements in counterclockwise spiral starting from (0,0) */
-        int idx = 0;
-        int top = 0, bottom = n - 1, left = 0, right = n - 1;
+    int r[MAXN * MAXN], c[MAXN * MAXN], len = 0;
+    int top = 0, bottom = n - 1, left = 0, right = n - 1;
 
-        while (top <= bottom && left <= right) {
-            /* go down along the left column */
-            for (int i = top; i <= bottom; i++)
-                arr[idx++] = a[i][left];
+    while (left <= right && top <= bottom) {
+        for (int i = top; i <= bottom; ++i) { r[len] = i; c[len] = left; ++len; }
+        ++left;
+        if (left > right) break;
 
-            /* go right along the bottom row */
-            for (int j = left + 1; j <= right; j++)
-                arr[idx++] = a[bottom][j];
+        for (int j = left; j <= right; ++j) { r[len] = bottom; c[len] = j; ++len; }
+        --bottom;
+        if (top > bottom) break;
 
-            /* go up along the right column */
-            if (right > left) {
-                for (int i = bottom - 1; i >= top; i--)
-                    arr[idx++] = a[i][right];
-            }
+        for (int i = bottom; i >= top; --i) { r[len] = i; c[len] = right; ++len; }
+        --right;
+        if (left > right) break;
 
-            /* go left along the top row */
-            if (bottom > top) {
-                for (int j = right - 1; j > left; j--)
-                    arr[idx++] = a[top][j];
-            }
+        for (int j = right; j >= left; --j) { r[len] = top; c[len] = j; ++len; }
+        ++top;
+    }
 
-            top++;
-            bottom--;
-            left++;
-            right--;
+    int v[MAXN * MAXN], nv[MAXN * MAXN];
+    for (int k = 0; k < len; ++k) v[k] = a[r[k]][c[k]];
+
+    int shift = (P % len + len) % len;
+    for (int k = 0; k < len; ++k) nv[(k + shift) % len] = v[k];
+
+    for (int k = 0; k < len; ++k) a[r[k]][c[k]] = nv[k];
+
+    printf("\n");
+
+    for (int k = 0; k < len; ++k) {
+        if (k) printf(" ");
+        printf("%d", nv[k]);
+    }
+    
+    printf("\n\n");
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (j) printf(" ");
+            printf("%d", a[i][j]);
         }
-
-        /* cyclic shift to the right by p positions */
-        if (len > 0) {
-            int shift = p % len;
-            for (int i = 0; i < len; i++) {
-                int new_pos = i + shift;
-                if (new_pos >= len)
-                    new_pos -= len;
-                shifted[new_pos] = arr[i];
-            }
-        }
-
-        /* put elements back into matrix in the same spiral order */
-        idx = 0;
-        top = 0;
-        bottom = n - 1;
-        left = 0;
-        right = n - 1;
-
-        while (top <= bottom && left <= right) {
-            /* go down along the left column */
-            for (int i = top; i <= bottom; i++)
-                a[i][left] = shifted[idx++];
-
-            /* go right along the bottom row */
-            for (int j = left + 1; j <= right; j++)
-                a[bottom][j] = shifted[idx++];
-
-            /* go up along the right column */
-            if (right > left) {
-                for (int i = bottom - 1; i >= top; i--)
-                    a[i][right] = shifted[idx++];
-            }
-
-            /* go left along the top row */
-            if (bottom > top) {
-                for (int j = right - 1; j > left; j--)
-                    a[top][j] = shifted[idx++];
-            }
-
-            top++;
-            bottom--;
-            left++;
-            right--;
-        }
-
-        /* print resulting matrix */
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++)
-                printf("%d ", a[i][j]);
-            printf("\n");
-        }
+        if (i != n - 1) printf("\n");
     }
 
     return 0;

@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main(void) 
+int sum(int a, int b)
 {
     char str[101];
     int n_words = 0;
